@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Finder</title>
+    <link rel="stylesheet" href="C:\Users\POOVA\Documents\Food\Project.css">
+</head>
+
+<body>
+    <nav>
+        <div class="logo">
+            <a href="MEAL FINDER">MEAL FINDER</a>
+        </div>
+        <div class="menu" onclick="openNav()">
+            <div class="menu-line"></div>
+            <div class="menu-line"></div>
+            <div class="menu-line"></div>
+        </div>
+    </nav>
+
+
+
+    <div class="container">
+        <img src="tableCloth.jpg" alt="tableCloth" id="table">
+        <div class="text">
+            <div class="search">
+                <input type="text" placeholder="Search recipes here ...">
+                <button><img src="images.png" alt="search-icon"></button>
+            </div>
+            <h1>What are your favorite cuisines ?</h1>
+            <p>PERSONALIZE YOUR EXPERIENCE.</p>
+        </div>
+    </div>
+
+    <div class="container2">
+        <div class="discription"></div>
+        <div id="meals-grid" class="meals"></div>
+    </div>
+
+
+
+    <div class="heading">
+        <h2>CATEGORIES</h2>
+        <div class="bar"></div>
+    </div>
+
+
+
+    <div class="container1">
+        <div id="categories-grid" class="grid-container"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const gridContainer = document.getElementById('categories-grid');
+
+            // Fetch data from the API
+            fetch('https://www.themealdb.com/api/json/v1/1/categories.php')
+                .then(response => response.json())
+                .then(data => {
+                    const categories = data.categories;
+
+                    // Loop through each category and create the grid item
+                    categories.forEach(category => {
+                        const gridItem = document.createElement('div');
+                        gridItem.classList.add('grid-item');
+
+                        gridItem.innerHTML = `
+                    <img src="${category.strCategoryThumb}" alt="${category.strCategory}">
+                    <h3>${category.strCategory}</h3>`;
+
+                        gridContainer.appendChild(gridItem);
+                    });
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        });
+    </script>
+
+    <script>
+        function Beef(){
+        // document.addEventListener('DOMContentLoaded', () => {
+            const gridContainer1 = document.getElementById('meals-grid');
+            fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=beef')
+                .then(response => response.json())
+                .then(data => {
+                    const chiken = data.meals;
+                    meals.forEach(meal => {
+                        const gridItem1 = document.createElement('div');
+                        gridItem1.classList.add('grid-item1');
+                        gridItem1.innerHTML =
+                            `<img src="${meal.strMealThumb}" alt="${meal.strMeal}">
+            <h3>${meal.strMeal}</h3>`;
+                        gridContainer1.appendChild(gridItem1);
+                    });
+                });
+                // .catch(error1 => console.error('Error fetching data:', error1));
+        // });
+    }
+    </script>
+
+
+    <div id="offcanvas-nav" class="offcanvas">
+        <button class="close-btn" onclick="closeNav()">x</button>
+        <ul class="sideBar">
+            <li><a href="" onclick="Beef()">Beef</a></li><hr>
+            <li><a href="">Chiken</a></li><hr>
+            <li><a href="">Dessert</a></li><hr>
+            <li><a href="">Lamb</a></li><hr>
+            <li><a href="">Miscellaneous</a></li><hr>
+            <li><a href="">Pasta</a></li><hr>
+            <li><a href="">Pork</a></li><hr>
+            <li><a href="">Sea food</a></li><hr>
+            <li><a href="">Side</a></li><hr>
+            <li><a href="">Starter</a></li><hr>
+            <li><a href="">Vegan</a></li><hr>
+            <li><a href="">Vegetarian</a></li><hr>
+            <li><a href="">Breakfast</a></li><hr>
+            <li><a href="">Goat</a></li><hr>
+        </ul>
+    </div>
+    <script>
+        function openNav() {
+            document.getElementById("offcanvas-nav").classList.add("show");
+        }
+        function closeNav() {
+            document.getElementById("offcanvas-nav").classList.remove("show");
+        }
+    </script>
+
+
+</body>
+
+</html>
