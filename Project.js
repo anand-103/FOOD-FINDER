@@ -15,7 +15,7 @@ function fetchCategories() {
     .catch(error => console.log(error));
 }
 
-// Display categories dynamically in the grid
+// Display categories dynamically in the grid formate
 function displayCategories(categories) {
     const categoryGrid = document.getElementById('category-grid');
     categoryGrid.innerHTML = '';  // Clear any existing categories
