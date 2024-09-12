@@ -20,114 +20,194 @@
         </div>
     </nav>
 
-
+    <div id="sidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <ul id="category-list">
+            <!-- Categories will be dynamically loaded here -->
+        </ul>
+    </div>
 
     <div class="container">
         <img src="tableCloth.jpg" alt="tableCloth" id="table">
         <div class="text">
             <div class="search">
-                <input type="text" placeholder="Search recipes here ...">
-                <button><img src="images.png" alt="search-icon"></button>
+                <input type="text" id="search-input" placeholder="Search recipes here ...">
+                <button id="search-button"><img src="images.png" alt="search-icon"></button>
             </div>
-            <h1>What are your favorite cuisines ?</h1>
+            <h1>What are your favorite cuisines?</h1>
             <p>PERSONALIZE YOUR EXPERIENCE.</p>
         </div>
     </div>
 
-    <div class="container2">
-        <div class="discription"></div>
-        <div id="meals-grid" class="meals"></div>
+    <div id="meal-details" class="meal-details"></div>
+        <!-- Meal details will be displayed here -->
     </div>
 
-
-
-    <div class="heading">
-        <h2>CATEGORIES</h2>
-        <div class="bar"></div>
+    <div class="meal-grid" id="meal-grid">
+        <h1 id="mealid"></h1>
+        <!-- Meals will be displayed here -->
     </div>
 
+    <!-- Dynamic Categories Section -->
+    <section class="categories">
+        <h1>Categories</h1><hr>
+        <div class="category-grid" id="category-grid">
+            <!-- Categories will be dynamically loaded here -->
+        </div>
+    </section>
 
 
-    <div class="container1">
-        <div id="categories-grid" class="grid-container"></div>
-    </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const gridContainer = document.getElementById('categories-grid');
+        // document.getElementById('search-button').addEventListener('click', searchMeal);
+        // const categoryItems = document.querySelectorAll('.sidebar ul li');
 
-            // Fetch data from the API
-            fetch('https://www.themealdb.com/api/json/v1/1/categories.php')
-                .then(response => response.json())
-                .then(data => {
-                    const categories = data.categories;
+        // Search meal by name
+        // function searchMeal() {
+        //     const query = document.getElementById('search-input').value;
+        //     fetchMeals(`https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`);
+        // }
+
+        // Fetch meal by category
+    //     categoryItems.forEach(item => {
+    //         item.addEventListener('click', () => {
+    //         const category = item.dataset.category;
+    //         fetchMeals(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`);
+    //     });
+    // });
+
+        // Fetch meal data from API
+        // function fetchMeals(url) {
+        //     fetch(url)
+        //     .then(response => response.json())
+        //     .then(data => displayMeals(data.meals))
+        //     .catch(error => console.log(error));
+        // }
+
+        // Display meals
+    //     function displayMeals(meals) {
+    //         const mealGrid = document.getElementById('meal-grid');
+    //         mealGrid.innerHTML = ''; // Clear previous results
+
+    //         if (meals === null) {
+    //             mealGrid.innerHTML = '<p>No meals found!</p>';
+    //             return;
+    //         }
+
+    //         meals.forEach(meal => {
+    //         const mealCard = document.createElement('div');
+    //         mealCard.classList.add('meal-card');
+    //         mealCard.innerHTML = `
+    //                             <img src="${meal.strMealThumb}" alt="${meal.strMeal}"/>
+    //                             <p id="cuisine">${meal.strCategory}</p>
+    //                             <p>${meal.strArea}</p>
+    //                             <h3>${meal.strMeal}</h3>
+    //                             `;
+    //         mealGrid.appendChild(mealCard);
+    //    });
+    // }
+
+    // function openNav() {
+    //         document.getElementById("offcanvas-nav").classList.add("show");
+    //     }
+    //     function closeNav() {
+    //         document.getElementById("offcanvas-nav").classList.remove("show");
+    //     }
+
+
+
+    // <!-- <div class="heading">
+    //     <h2>CATEGORIES</h2>
+    //     <div class="bar"></div>
+    // </div> -->
+
+
+
+    // <!-- <div class="container1">
+    //     <div id="categories-grid" class="grid-container"></div>
+    // </div> -->
+
+    // <!-- <script>
+    //     document.addEventListener('DOMContentLoaded', () => {
+    //         const gridContainer = document.getElementById('categories-grid'); -->
+
+             // Fetch data from the API
+            // <!-- fetch('https://www.themealdb.com/api/json/v1/1/categories.php')
+            //     .then(response => response.json())
+            //     .then(data => {
+            //         const categories = data.categories;
 
                     // Loop through each category and create the grid item
-                    categories.forEach(category => {
-                        const gridItem = document.createElement('div');
-                        gridItem.classList.add('grid-item');
+        //             categories.forEach(category => {
+        //                 const gridItem = document.createElement('div');
+        //                 gridItem.classList.add('grid-item');
 
-                        gridItem.innerHTML = `
-                    <img src="${category.strCategoryThumb}" alt="${category.strCategory}">
-                    <h3>${category.strCategory}</h3>`;
+        //                 gridItem.innerHTML = `
+        //             <img src="${category.strCategoryThumb}" alt="${category.strCategory}">
+        //             <h3>${category.strCategory}</h3>`;
 
-                        gridContainer.appendChild(gridItem);
-                    });
-                })
-                .catch(error => console.error('Error fetching data:', error));
-        });
-    </script>
-
-    <script>
-        function Beef(){
-        // document.addEventListener('DOMContentLoaded', () => {
-            const gridContainer1 = document.getElementById('meals-grid');
-            fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=beef')
-                .then(response => response.json())
-                .then(data => {
-                    const chiken = data.meals;
-                    meals.forEach(meal => {
-                        const gridItem1 = document.createElement('div');
-                        gridItem1.classList.add('grid-item1');
-                        gridItem1.innerHTML =
-                            `<img src="${meal.strMealThumb}" alt="${meal.strMeal}">
-            <h3>${meal.strMeal}</h3>`;
-                        gridContainer1.appendChild(gridItem1);
-                    });
-                });
-                // .catch(error1 => console.error('Error fetching data:', error1));
+        //                 gridContainer.appendChild(gridItem);
+        //             });
+        //         })
+        //         .catch(error => console.error('Error fetching data:', error));
         // });
-    }
     </script>
 
+    
 
-    <div id="offcanvas-nav" class="offcanvas">
+
+    <!-- <div id="offcanvas-nav" class="sideBar">
         <button class="close-btn" onclick="closeNav()">x</button>
-        <ul class="sideBar">
-            <li><a href="" onclick="Beef()">Beef</a></li><hr>
-            <li><a href="">Chiken</a></li><hr>
-            <li><a href="">Dessert</a></li><hr>
-            <li><a href="">Lamb</a></li><hr>
-            <li><a href="">Miscellaneous</a></li><hr>
-            <li><a href="">Pasta</a></li><hr>
-            <li><a href="">Pork</a></li><hr>
-            <li><a href="">Sea food</a></li><hr>
-            <li><a href="">Side</a></li><hr>
-            <li><a href="">Starter</a></li><hr>
-            <li><a href="">Vegan</a></li><hr>
-            <li><a href="">Vegetarian</a></li><hr>
-            <li><a href="">Breakfast</a></li><hr>
-            <li><a href="">Goat</a></li><hr>
+        <ul>
+            <li data-category="Beef">Beef</li><hr>
+            <li data-category="Chicken">Chicken</li><hr>
+            <li data-category="Dessert">Dessert</li><hr>
+            <li data-category="Lamb">Lamb</li><hr>
+            <li data-category="Miscellaneous">Miscellaneous</li><hr>
+            <li data-category="Pasta">Pasta</li><hr>
+            <li data-category="Pork">Pork</li><hr>
+            <li data-category="Sea food">Sea food</li><hr>
+            <li data-category="Side">Side</li><hr>
+            <li data-category="Starter">Starter</li><hr>
+            <li data-category="Vegan">Vegan</li><hr>
+            <li data-category="Vegetarian">Vegetarian</li><hr>
+            <li data-category="Breakfast">Breakfast</li><hr>
+            <li data-category="Goat">Goat</li><hr>
         </ul>
-    </div>
-    <script>
+    </div> -->
+    <!-- <script>
         function openNav() {
             document.getElementById("offcanvas-nav").classList.add("show");
         }
         function closeNav() {
             document.getElementById("offcanvas-nav").classList.remove("show");
         }
-    </script>
+    </script> -->
 
 
 </body>
