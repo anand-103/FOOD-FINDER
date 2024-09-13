@@ -1,3 +1,5 @@
+let categoryDescriptions = {}; // Store descriptions for categories 
+
 // Function to clear meal details
 function clearMealDetails() {
     const mealDetails = document.getElementById('meal-details');
@@ -9,6 +11,9 @@ function fetchCategories() {
     return fetch('https://www.themealdb.com/api/json/v1/1/categories.php')
     .then(response => response.json())
     .then(data => {
+        data.categories.forEach(category => {
+            categoryDescriptions[category.strCategory] = category.strCategoryDescription;
+        });
         displayCategories(data.categories);
         populateSidebarCategories(data.categories);
     })
@@ -30,30 +35,32 @@ function displayCategories(categories) {
             <p class="category-name">${category.strCategory}</p>
         `;
 
-        // Setting the data-category for fetching meals based on category
-        categoryCard.dataset.category = category.strCategory;
-
         // Adding event listener for category click
         categoryCard.addEventListener('click', () => {
             clearMealDetails(); // Clear meal details before showing category meals
             // Fetch meals filtered by category
-            fetchMeals(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category.strCategory}`);
+            fetchMealsByCategory(category.strCategory);
         });
 
         categoryGrid.appendChild(categoryCard);
     });
 }
 
-// Function to fetch meals from API
-function fetchMeals(url) {
-    fetch(url)
+// Fetch meals by category and include description
+function fetchMealsByCategory(category) {
+    fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`)
         .then(response => response.json())
         .then(data => {
-            if (data && data.meals) {
-                displayMeals(data.meals);
+            const meals = data.meals || [];
+            let description = '';
+
+            if (categoryDescriptions[category]) {
+                description = categoryDescriptions[category];
             } else {
-                displayMeals([]);  // Pass an empty array if no meals found
+                description = '';  // Pass an empty array if no meals found
             }
+
+            displayMeals(meals, description);
         })
         .catch(error => console.log(error));
 }
@@ -61,9 +68,14 @@ function fetchMeals(url) {
 
 
 // Function to display meals
-function displayMeals(meals) {
+const displayMeals = (meals, description = '') => {
     const mealGrid = document.getElementById('meal-grid');
     mealGrid.innerHTML = ''; // Clear previous results
+
+    //if description exists, display it
+    if (description !== ''){
+        mealGrid.innerHTML = `<h3>Description</h3><p>${description}</p>`;
+    }
 
     // Add a heading above the meal list
     const heading = document.createElement('h2');
@@ -99,23 +111,13 @@ function displayMeals(meals) {
 function fetchMealDetails(mealId) {
     fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`)
         .then(response => response.json())
-        .then(data => {
-            if (data && data.meals) {
-                displayMealDetails(data.meals[0]);
-            }
-        })
+        .then(data => displayMealDetails(data.meals[0]))
         .catch(error => console.log(error));
 }
 
 // Function to display meal details
 function displayMealDetails(meal) {
     const mealDetails = document.getElementById('meal-details');
-    
-    // Add a heading above the meal Detailes
-    const heading2 = document.createElement('h2');
-    heading2.textContent = 'MEAL DETAILES';
-    heading2.classList.add('meal-heading');
-    mealDetails.appendChild(heading2);
 
     mealDetails.innerHTML = `
     <div class = "singleItem">
