@@ -125,15 +125,15 @@ function displayMealDetails(meal) {
         <div class = "textItem">
             <h2>${meal.strMeal}</h2><hr>
             <h3>CATEGORY : ${meal.strCategory}</h3>
-            <p>Source : ${meal.strMealThumb}</p>
-            <b>Tags : ${meal.strTags}</b>
+            <p id = "source">Source : ${meal.strMealThumb}</p>
+            <b>Tags : <b>${meal.strTags}</b></b>
             <div class = "ingredients">
                 <h3>Ingredients :</h3>
-                    <ul>
-                        ${Array.from({ length: 20 }, (_, i) => i + 1)
-            .map(i => meal[`strIngredient${i}`] ? `<li><span>${i}</span> ${meal[`strIngredient${i}`]} </li>` : '')
-            .join('')
-        }
+                <ul>
+                    ${Array.from({ length: 20 }, (_, i) => i + 1)
+                    .map(i => meal[`strIngredient${i}`] ? `<li><span>${i}</span> ${meal[`strIngredient${i}`]} </li>` : '')
+                    .join('')
+                }
                 </ul>
             </div>
         </div>
@@ -146,9 +146,9 @@ function displayMealDetails(meal) {
             .join('')
         }
     </ul>
-    <div class = "Instructions">
+    <div class = "instructions">
         <h3>Instructions:</h3>
-        <p>${meal.strInstructions}</p>
+        <p>✅${meal.strInstructions}</p>
     </div>
     `;
 }
