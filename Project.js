@@ -68,7 +68,7 @@ function displayMeals(meals) {
     // Add a heading above the meal list
     const heading = document.createElement('h2');
     heading.textContent = 'MEAL';
-    heading.classList.add('meal-heading'); // Optional: Add class for styling
+    heading.classList.add('meal-heading');
     mealGrid.appendChild(heading);
 
 
@@ -110,10 +110,11 @@ function fetchMealDetails(mealId) {
 // Function to display meal details
 function displayMealDetails(meal) {
     const mealDetails = document.getElementById('meal-details');
+    
     // Add a heading above the meal Detailes
     const heading2 = document.createElement('h2');
     heading2.textContent = 'MEAL DETAILES';
-    heading2.classList.add('meal-heading'); // Optional: Add class for styling
+    heading2.classList.add('meal-heading');
     mealDetails.appendChild(heading2);
 
     mealDetails.innerHTML = `
