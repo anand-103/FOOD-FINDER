@@ -5,7 +5,7 @@ function clearMealDetails() {
     const mealDetails = document.getElementById('meal-details');
     mealDetails.innerHTML = '';
 }
-
+// Category Card Block
 // Fetch all categories from the API and display them
 function fetchCategories() {
     return fetch('https://www.themealdb.com/api/json/v1/1/categories.php')
@@ -74,7 +74,11 @@ const displayMeals = (meals, description = '') => {
 
     //if description exists, display it
     if (description !== ''){
-        mealGrid.innerHTML = `<h3>Description</h3><p>${description}</p>`;
+        mealGrid.innerHTML = `
+        <div class = "disc">
+            <h3 class = "discripHeading">Description</h3><br>
+            <p>${description}</p>
+        </div>`;
     }
 
     // Add a heading above the meal list
@@ -118,8 +122,16 @@ function fetchMealDetails(mealId) {
 // Function to display meal details
 function displayMealDetails(meal) {
     const mealDetails = document.getElementById('meal-details');
+    mealDetails.innerHTML = '';
 
     mealDetails.innerHTML = `
+        <div class = "home">
+            <h3 onclick = "clearAll()">🏠︎ >> ${meal.strMeal}</h3>
+            <h2>MEAL DETAILS</h2><div></div>
+        </div>`;
+
+    mealDetails.innerHTML += `
+    <div class = "detailMeal">
     <div class = "singleItem">
         <div class = "imgItem">
             <img src="${meal.strMealThumb}" alt="${meal.strMeal}" />
@@ -148,11 +160,43 @@ function displayMealDetails(meal) {
             .join('')
         }
     </ul>
+    </div>
     <div class = "instructions">
         <h3>Instructions:</h3>
         <p>✅${meal.strInstructions}</p>
     </div>
+    </div>
     `;
 }
+
+// Sidebar Block
+const populateSidebarCategories = (categories) => {
+    const categoryList = document.getElementById('category-list');
+    categoryList.innerHTML = '';
+    categories.forEach(category => {
+        const categoryItem = document.createElement('li');
+        categoryItem.textContent = category.strCategory;
+        categoryItem.addEventListener('click', () => {
+            clearMealDetails();
+            fetchMealsByCategory(category.strCategory);
+            closeNav();
+        });
+        categoryList.appendChild(categoryItem);
+    });
+};
+
+//Clear all
+const clearAll = () => {
+    document.getElementById('meal-details').innerHTML = '';
+    document.getElementById('meal-grid').innerHTML = '';
+}
+
+// Sidebar open/close
+const openNav = () => {
+    clearMealDetails();
+    document.getElementById("sidebar").style.width = "250px";
+};
+
+const closeNav = () => document.getElementById("sidebar").style.width = "0";
 
 fetchCategories();

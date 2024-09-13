@@ -271,6 +271,32 @@ nav .logo a {
 }
 
 /* Meal Details Section */
+.home h3{
+    border: 1px solid orangered;
+    padding: 5px;
+    background-color: orangered;
+    color: white;
+    cursor: pointer;
+}
+.home div {
+    text-align: left;
+    width: 70px;
+    margin-bottom: 30px;
+    border: 4px solid orangered;
+}
+.disc {
+    border: 1px solid orangered;
+    display: grid;
+    width: 1200px;
+    margin: auto;
+    padding: 10px;
+
+}
+.disc .discripHeading {
+    color: orangered;
+    display: block;
+}
+
 .meal-details {
     display: grid;
     padding: 20px;
@@ -281,16 +307,30 @@ nav .logo a {
     max-width: 1100px;
     margin-left: auto;
     margin-right: auto;
-    background-color: orange;
+    background-color: white;
 }
 
+.detailMeal {
+    background-color: white;
+    border: 2px solid whitesmoke;
+    padding: 5px;
+}
 .singleItem {
     display: flex;
     justify-content: space-between;
+    padding: 5px;
 }
 
 .textItem #source{
     font-weight: bold;
+}
+
+.textItem h2 {
+    color: orangered;
+}
+
+.textItem hr {
+    color: orangered;
 }
 .meal-heading{
     text-align: left;
@@ -305,6 +345,12 @@ nav .logo a {
     margin-top: 20px;
 }
 
+.ingredients {
+    background-color: orangered;
+    color: white;
+    padding: 10px;
+    margin-top: 10px;
+}
 .ingredients ul {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -329,6 +375,10 @@ nav .logo a {
     color: white;
 }
 
+.measures ul {
+    border: 1px solid rgb(223, 221, 221);
+    padding: 20px;
+}
 /* .instructions span::before {
     content: "✅ ";
 } */
