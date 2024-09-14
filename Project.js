@@ -50,7 +50,7 @@ const displayMeals = (meals, description = '') => {
     if (description !== ''){
         mealGrid.innerHTML = `
         <div class = "disc">
-            <h3 class = "discripHeading">Description</h3><br>
+            <h2 class = "discripHeading">Description</h2><br>
             <p>${description}</p>
         </div>`;
     }
@@ -114,7 +114,7 @@ function displayMealDetails(meal) {
             <h2>${meal.strMeal}</h2><hr>
             <h3>CATEGORY : ${meal.strCategory}</h3>
             <p id = "source">Source : ${meal.strMealThumb}</p>
-            <b>Tags : <b>${meal.strTags}</b></b>
+            <b>Tags : <b class = "tag">${meal.strTags}</b></b>
             <div class = "ingredients">
                 <h3>Ingredients :</h3>
                 <ul>
