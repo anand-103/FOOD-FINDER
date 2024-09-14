@@ -5,7 +5,7 @@ function clearMealDetails() {
     const mealDetails = document.getElementById('meal-details');
     mealDetails.innerHTML = '';
 }
-// Category Card Block
+
 // Fetch all categories from the API and display them
 function fetchCategories() {
     return fetch('https://www.themealdb.com/api/json/v1/1/categories.php')
@@ -18,32 +18,6 @@ function fetchCategories() {
         populateSidebarCategories(data.categories);
     })
     .catch(error => console.log(error));
-}
-
-// Display categories dynamically in the grid formate
-function displayCategories(categories) {
-    const categoryGrid = document.getElementById('category-grid');
-    categoryGrid.innerHTML = '';  // Clear any existing categories
-
-    categories.forEach(category => {
-        const categoryCard = document.createElement('div');
-        categoryCard.classList.add('category-card');
-
-        // Adding category image and name
-        categoryCard.innerHTML = `
-            <img src="${category.strCategoryThumb}" alt="${category.strCategory}" class="category-image"/>
-            <p class="category-name">${category.strCategory}</p>
-        `;
-
-        // Adding event listener for category click
-        categoryCard.addEventListener('click', () => {
-            clearMealDetails(); // Clear meal details before showing category meals
-            // Fetch meals filtered by category
-            fetchMealsByCategory(category.strCategory);
-        });
-
-        categoryGrid.appendChild(categoryCard);
-    });
 }
 
 // Fetch meals by category and include description
@@ -169,6 +143,34 @@ function displayMealDetails(meal) {
     `;
 }
 
+// Category Card Block
+// Display categories dynamically in the grid formate
+function displayCategories(categories) {
+    const categoryGrid = document.getElementById('category-grid');
+    categoryGrid.innerHTML = '';  // Clear any existing categories
+
+    categories.forEach(category => {
+        const categoryCard = document.createElement('div');
+        categoryCard.classList.add('category-card');
+
+        // Adding category image and name
+        categoryCard.innerHTML = `
+            <img src="${category.strCategoryThumb}" alt="${category.strCategory}" class="category-image"/>
+            <p class="category-name">${category.strCategory}</p>
+        `;
+
+        // Adding event listener for category click
+        categoryCard.addEventListener('click', () => {
+            clearMealDetails(); // Clear meal details before showing category meals
+            valueClear();
+            // Fetch meals filtered by category
+            fetchMealsByCategory(category.strCategory);
+        });
+
+        categoryGrid.appendChild(categoryCard);
+    });
+}
+
 // Sidebar Block
 const populateSidebarCategories = (categories) => {
     const categoryList = document.getElementById('category-list');
@@ -180,10 +182,49 @@ const populateSidebarCategories = (categories) => {
             clearMealDetails();
             fetchMealsByCategory(category.strCategory);
             closeNav();
+            valueClear();
         });
         categoryList.appendChild(categoryItem);
     });
 };
+
+//Search Block
+// Fetch meals from the API for search and display with category description
+const fetchMeals = (url) => {
+    fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            const meals = data.meals || [];
+            let category = '';
+            let description = '';
+
+            if (meals.length > 0) {
+                category = meals[0].strCategory;
+
+                if (categoryDescriptions[category]) {
+                    description = categoryDescriptions[category];
+                } else {
+                    description = '';
+                }
+            }
+
+            displayMeals(meals, description);
+        })
+        .catch(console.error);
+};
+
+// Search for meals
+const searchMeal = () => {
+    clearMealDetails();
+    const query = document.getElementById('search-input').value;
+    fetchMeals(`https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`);
+};
+
+// Search button listener
+document.getElementById('search-button').addEventListener('click', searchMeal);
+
+// Search value clear
+const valueClear = () => document.getElementById('search-input').value = '';
 
 //Clear all
 const clearAll = () => {
